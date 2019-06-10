@@ -26,6 +26,7 @@ OBJS = \
 	trap.o\
 	uart.o\
 	vectors.o\
+	systemcalldata.o\
 	vm.o\
 
 # Cross-compiling (e.g., on Mac OS X)
@@ -182,6 +183,7 @@ UPROGS=\
 	_wc\
 	_getinvokedcalls\
 	_getallcalls\
+	_systemcalldata\
 	_zombie\
 
 fs.img: mkfs README $(UPROGS)
@@ -212,7 +214,7 @@ bochs : fs.img xv6.img
 	if [ ! -e .bochsrc ]; then ln -s dot-bochsrc .bochsrc; fi
 	bochs -q
 
-# try to generate a unique GDB port
+# try to generate a unique GDB port.o
 GDBPORT = $(shell expr `id -u` % 5000 + 25000)
 # QEMU's gdb stub command line changed in 0.11
 QEMUGDB = $(shell if $(QEMU) -help | grep -q '^-gdb'; \
@@ -252,7 +254,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c getinvokedcalls.c getallcalls.c zombie.c\
-	printf.c umalloc.c\
+	printf.c umalloc.c systemcalldata.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
 

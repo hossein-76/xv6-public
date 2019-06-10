@@ -6,7 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
+#include "systemcalldata.h"
 int
 sys_fork(void)
 {
@@ -89,13 +89,35 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
-int
+void
 sys_invoked_syscalls(void)
 {
-  return 1234;
+  cprintf("%s\n", "hi from invoked_syscalls");
+  int pid=1;
+  // if(argint(0, &pid) < 0)
+  //   cprintf("%s\n", "Error");
+
+  cprintf("process:%d \n", pid);
+  for(int i=0;i < list_size; i++)
+  {
+    if(m_calls[i].pid==pid){
+      cprintf(" name: %s | id: $s | count: %d | date: %d/%d/%d | time: %d:%d | datatype: %s\n",
+    names[m_calls[i].id -1 ], m_calls[i].id, counts[m_calls[i].id - 1],
+    m_calls[i].year, m_calls[i].month, m_calls[i].day, m_calls[i].hour,
+    m_calls[i].minute, data_types[m_calls[i].id -1]);
+  }
+  }
+  cprintf("%s\n", "bye from invoked_syscalls");
 }
-int
+void
 sys_log_syscalls(void)
 {
-  return 1699;
+  for(int i=0;i < list_size; i++)
+  {
+    cprintf(" name: %s | id: $s | count: %d | date: %d/%d/%d | time: %d:%d | datatype: %s\n",
+    names[m_calls[i].id -1 ], m_calls[i].id, counts[m_calls[i].id - 1],
+    m_calls[i].year, m_calls[i].month, m_calls[i].day, m_calls[i].hour,
+    m_calls[i].minute, data_types[m_calls[i].id -1]);
+  }
+  cprintf("%s\n", "byyyyyeeee");
 }

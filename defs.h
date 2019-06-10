@@ -9,7 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
-
+struct sysCallData;
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);
@@ -122,6 +122,7 @@ void            wakeup(void*);
 void            yield(void);
 void            log_syscalls(void);
 void            invoked_syscalls(void);
+int             increase_data(struct sysCallData);
 
 // swtch.S
 void            swtch(struct context**, struct context*);
