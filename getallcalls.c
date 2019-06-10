@@ -4,6 +4,7 @@
 
 int main(void)
 {
-  printf(1, "Unix V6 was released in the year %d\n", log_syscalls());
+
+  log_syscalls();
   exit();
 }
